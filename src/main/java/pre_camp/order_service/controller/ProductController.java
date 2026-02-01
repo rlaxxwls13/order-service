@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pre_camp.order_service.dto.AddProductDto;
+import pre_camp.order_service.dto.ProductDetailDto;
 import pre_camp.order_service.dto.ProductListDto;
 import pre_camp.order_service.service.ProductService;
 
@@ -31,5 +33,9 @@ public class ProductController {
         return ResponseEntity.ok(productList);
     }
 
-
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<ProductDetailDto> getProductDetails(@PathVariable Long productId) {
+        ProductDetailDto productDetails = productService.getProductDetails(productId);
+        return ResponseEntity.ok(productDetails);
+    }
 }

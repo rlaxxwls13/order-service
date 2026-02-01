@@ -5,8 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pre_camp.order_service.domain.Product;
 import pre_camp.order_service.dto.AddProductDto;
+import pre_camp.order_service.dto.ProductDetailDto;
 import pre_camp.order_service.dto.ProductListDto;
 import pre_camp.order_service.dto.UpdateProductDto;
+import pre_camp.order_service.error.ErrorCode;
+import pre_camp.order_service.error.exception.BusinessException;
 import pre_camp.order_service.repository.ProductRepository;
 import pre_camp.order_service.service.ProductService;
 
@@ -26,16 +29,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public List<ProductListDto> getProductList() {
-        List<Product> productList = productRepository.findAll();
-        return productList.stream()
+        return productRepository.findAll().stream()
                 .map(ProductListDto::toDto)
                 .toList();
     }
 
     @Override
-    public void getProductDetails() {
-
+    @Transactional
+    public ProductDetailDto getProductDetails(Long productId) {
+        return productRepository.findById(productId)
+                .map(ProductDetailDto::toDto)
+                .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
     }
 
     @Override
