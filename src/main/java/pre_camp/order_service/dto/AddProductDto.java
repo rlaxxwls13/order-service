@@ -4,7 +4,7 @@ import pre_camp.order_service.domain.Product;
 
 public class AddProductDto {
     private String name;
-    private int price;
+    private double price;
     private int quantity;
     private String description;
 
