@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public List<ProductListDto> getProductList() {
-        return productRepository.findAll().stream()
+        return productRepository.findByDeletedFalse().stream()
                 .map(ProductListDto::toDto)
                 .toList();
     }
@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductDetailDto getProductDetails(Long productId) {
-        return productRepository.findById(productId)
+        return productRepository.findByProductIdAndDeletedFalse(productId)
                 .map(ProductDetailDto::toDto)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
     }
@@ -50,7 +50,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct() {
-
+    @Transactional
+    public void deleteProduct(Long productId) {
+        Product product = productRepository.findByProductIdAndDeletedFalse(productId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
+        product.softDelete();
     }
 }
