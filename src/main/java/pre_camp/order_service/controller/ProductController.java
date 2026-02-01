@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pre_camp.order_service.dto.AddProductDto;
 import pre_camp.order_service.dto.ProductDetailDto;
 import pre_camp.order_service.dto.ProductListDto;
+import pre_camp.order_service.dto.UpdateProductDto;
 import pre_camp.order_service.service.ProductService;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/product/new")
-    public ResponseEntity<String> addProduct(AddProductDto addProductDto) {
+    public ResponseEntity<String> addProduct(@RequestBody AddProductDto addProductDto) {
         productService.addProduct(addProductDto);
         return new ResponseEntity<>("Product added", HttpStatus.OK);
     }
@@ -33,6 +34,12 @@ public class ProductController {
     public ResponseEntity<ProductDetailDto> getProductDetails(@PathVariable Long productId) {
         ProductDetailDto productDetails = productService.getProductDetails(productId);
         return ResponseEntity.ok(productDetails);
+    }
+
+    @PutMapping("/product/{productId}")
+    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody UpdateProductDto updateProductDto) {
+        productService.updateProduct(productId, updateProductDto);
+        return new ResponseEntity<>("Product updated", HttpStatus.OK);
     }
 
     @DeleteMapping("/product/{productId}")

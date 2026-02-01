@@ -45,8 +45,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(UpdateProductDto updateProductDto) {
-
+    @Transactional
+    public void updateProduct(Long productId, UpdateProductDto updateProductDto) {
+        Product product = productRepository.findByProductIdAndDeletedFalse(productId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
+        product.update(updateProductDto);
     }
 
     @Override
