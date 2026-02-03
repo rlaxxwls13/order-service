@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pre_camp.order_service.domain.Order;
 import pre_camp.order_service.domain.Product;
+import pre_camp.order_service.dto.OrderDetailDto;
 import pre_camp.order_service.dto.OrderDto;
 import pre_camp.order_service.error.ErrorCode;
 import pre_camp.order_service.error.exception.BusinessException;
@@ -29,7 +30,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void getOrderList(Long orderId) {
+    public OrderDetailDto getOrderDetails(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_NOT_FOUND));
+        return OrderDetailDto.toDto(order);
+    }
+
+    @Override
+    public void getOrderList() {
 
     }
 }

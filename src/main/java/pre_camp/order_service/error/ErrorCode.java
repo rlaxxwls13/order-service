@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "PRODUCT_NOT_FOUND", "존재하지 않는 상품입니다."),
+    ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "PRODUCT_NOT_FOUND", "존재하지 않는 주문입니다."),
 
     INVALID_PRICE(HttpStatus.BAD_REQUEST, "PRODUCT_INVALID_PRICE","상품 가격은 0 이상이어야 합니다."),
     INVALID_QUANTITY(HttpStatus.BAD_REQUEST, "PRODUCT_INVALID_QUANTITY", "상품 수량은 0 이상이어야 합니다"),
