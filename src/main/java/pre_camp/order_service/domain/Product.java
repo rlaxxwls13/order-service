@@ -1,12 +1,14 @@
 package pre_camp.order_service.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.aspectj.weaver.ast.Or;
 import pre_camp.order_service.dto.UpdateProductDto;
 import pre_camp.order_service.error.ErrorCode;
 import pre_camp.order_service.error.exception.BusinessException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,7 +17,7 @@ import pre_camp.order_service.error.exception.BusinessException;
 @AllArgsConstructor
 public class Product {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
     private String name;
     private double price;
@@ -23,6 +25,9 @@ public class Product {
     private String description;
     @Column(nullable = false) @Builder.Default
     private boolean deleted = false;
+
+    @OneToMany(mappedBy = "product")
+    private List<Order> orders = new ArrayList<>();
 
     public void softDelete() {
         this.deleted = true;
