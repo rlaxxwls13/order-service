@@ -2,7 +2,6 @@ package pre_camp.order_service.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.aspectj.weaver.ast.Or;
 import pre_camp.order_service.dto.UpdateProductDto;
 import pre_camp.order_service.error.ErrorCode;
 import pre_camp.order_service.error.exception.BusinessException;
@@ -27,7 +26,7 @@ public class Product {
     private boolean deleted = false;
 
     @OneToMany(mappedBy = "product")
-    private List<Order> orders = new ArrayList<>();
+    private List<Orders> orders = new ArrayList<>();
 
     public void softDelete() {
         this.deleted = true;

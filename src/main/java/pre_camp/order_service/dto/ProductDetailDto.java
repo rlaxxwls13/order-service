@@ -1,8 +1,12 @@
 package pre_camp.order_service.dto;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import pre_camp.order_service.domain.Product;
 
+@Getter
+@Setter
 @Builder
 public class ProductDetailDto {
     private Long productId;

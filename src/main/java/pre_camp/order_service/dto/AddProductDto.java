@@ -1,7 +1,13 @@
 package pre_camp.order_service.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pre_camp.order_service.domain.Product;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class AddProductDto {
     private String name;
     private double price;
